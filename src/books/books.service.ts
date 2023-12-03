@@ -1,26 +1,44 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
+import { Book } from './entities/book.entity';
 
 @Injectable()
 export class BooksService {
+  private books: Book[] = [];
+
   create(createBookDto: CreateBookDto) {
-    return 'This action adds a new book';
+    this.books.push(createBookDto);
+    return createBookDto;
   }
 
   findAll() {
-    return `This action returns all books`;
+    return this.books;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} book`;
+  findOne(ISBN: string) {
+    const book = this.books.find((book) => book.ISBN === ISBN);
+
+    if (!book) {
+      throw new HttpException(
+        `Book with the following ${ISBN} ISBN doesn't exist`,
+        404,
+      );
+    }
+    return book;
   }
 
-  update(id: number, updateBookDto: UpdateBookDto) {
-    return `This action updates a #${id} book`;
+  update(ISBN: string, updateBookDto: UpdateBookDto) {
+    return `This action updates a #${ISBN} book`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} book`;
+  remove(ISBN: string) {
+    const index = this.books.findIndex((book) => book.ISBN === ISBN);
+
+    const book = this.books.splice(index, 1);
+
+    console.log(this.books);
+
+    return book;
   }
 }

@@ -37,8 +37,6 @@ export class BooksService {
 
     const book = this.books.splice(index, 1);
 
-    console.log(this.books);
-
     return book;
   }
 }

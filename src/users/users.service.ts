@@ -24,9 +24,9 @@ export class UsersService {
     return Promise.resolve(user);
   }
 
-  update(email: string, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
+  // update(email: string, updateUserDto: UpdateUserDto) {
+  //   return `This action updates a #${id} user`;
+  // }
 
   remove(email: string): Promise<User> {
     const index = this.users.findIndex((book) => book.email === email);

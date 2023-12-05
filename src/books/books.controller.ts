@@ -10,10 +10,16 @@ import {
 import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
+import { ApiTags } from '@nestjs/swagger';
+import { ConfigService } from '@nestjs/config';
 
+@ApiTags('books')
 @Controller('books')
 export class BooksController {
-  constructor(private readonly booksService: BooksService) {}
+  constructor(
+    private readonly booksService: BooksService,
+    private readonly configService: ConfigService,
+  ) {}
 
   @Post()
   create(@Body() createBookDto: CreateBookDto) {
@@ -22,6 +28,8 @@ export class BooksController {
 
   @Get()
   findAll() {
+    const dbUser = this.configService.get<string>('DATABASE_USER');
+    console.log(dbUser);
     return this.booksService.findAll();
   }
 

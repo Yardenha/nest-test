@@ -10,7 +10,9 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('users')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -30,13 +32,13 @@ export class UsersController {
     return await this.usersService.findOne(email);
   }
 
-  @Patch(':email')
-  async update(
-    @Param('email') email: string,
-    @Body() updateUserDto: UpdateUserDto,
-  ) {
-    return await this.usersService.update(email, updateUserDto);
-  }
+  // @Patch(':email')
+  // async update(
+  //   @Param('email') email: string,
+  //   @Body() updateUserDto: UpdateUserDto,
+  // ) {
+  //   return await this.usersService.update(email, updateUserDto);
+  // }
 
   @Delete(':email')
   async remove(@Param('email') email: string) {
